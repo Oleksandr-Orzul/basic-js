@@ -12,25 +12,12 @@ const { NotImplementedError } = require("../extensions/index.js");
  *
  */
 function getSeason(date) {
-  // throw new NotImplementedError("Not implemented");
-  if (
-    date ==
-    Object.setPrototypeOf(
-      {
-        toString() {
-          return Date.prototype.toString.call(new Date());
-        },
-        [Symbol.toStringTag]: "Date",
-      },
-      Object.getPrototypeOf(new Date())
-    )
-  ) {
-    throw new Error("Invalid date!");
-  }
   if (!date) {
     return "Unable to determine the time of year!";
   }
-
+  if (Object.getOwnPropertyNames(date)[0] === "toString") {
+    throw new Error("Invalid date!");
+  }
   if (Object.prototype.toString.call(date) !== "[object Date]" || isNaN(date)) {
     throw new Error("Invalid date!");
   }
